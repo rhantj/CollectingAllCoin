@@ -9,7 +9,6 @@ public class MinimapControl : MonoBehaviour
     [SerializeField] RectTransform miniMap;
     [SerializeField] Image icon;
 
-    List<GameObject> spawnedCoins = new();
     private const string coinIconText = "CoinIcon";
     float mapX;
     float mapY;
@@ -31,9 +30,8 @@ public class MinimapControl : MonoBehaviour
         icon.transform.localPosition = newPos;
     }
 
-    public void SetCoinIcon()
+    public void SetCoinIcon(List<GameObject> spawnedCoins)
     {
-        spawnedCoins.Clear();
         spawnedCoins = GameManager.Instance.SpawndCoinList;
 
         foreach (var coin in spawnedCoins)
@@ -41,7 +39,11 @@ public class MinimapControl : MonoBehaviour
             var newPos = TransformPoint(coin.transform.position);
             ObjectPoolManager.Instance.SpawnFromPool(coinIconText, Vector3.zero, out var obj);
 
+            obj.transform.SetParent(miniMap.transform, false);
             obj.transform.localPosition = newPos;
+
+            var c = coin.GetComponent<Coin>();
+            c.SetCoinIcon(obj);
         }
     }
 

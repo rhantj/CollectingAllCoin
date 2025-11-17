@@ -14,7 +14,10 @@ public class Coin : MonoBehaviour, ICollectable
     [SerializeField] GameObject descriptionPanel;
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI descriptionText;
+    private GameObject coinIcon;
 
+    private const string coinName = "Coin";
+    private const string coinIconName = "CoinIcon";
 
     void OnEnable()
     {
@@ -24,6 +27,7 @@ public class Coin : MonoBehaviour, ICollectable
     void OnDisable()
     {
         OnPointerExit();
+        ObjectPoolManager.Instance.ReturnToPool(coinIconName, coinIcon);
     }
 
     private void OnTriggerStay(Collider other)
@@ -53,8 +57,17 @@ public class Coin : MonoBehaviour, ICollectable
     {
         GameManager.Instance.Score += m_score;
         GameManager.Instance.TotaleCoinCnt--;
-        ObjectPoolManager.Instance.ReturnToPool("Coin", gameObject);
+
+        ObjectPoolManager.Instance.ReturnToPool(coinName, gameObject);
+        ObjectPoolManager.Instance.ReturnToPool(coinIconName, coinIcon);
+
+
         ICollectable.CollectedInvoke();
+    }
+
+    public void SetCoinIcon(GameObject icon)
+    {
+        coinIcon = icon;
     }
 
     public void OnPointerEnter()
