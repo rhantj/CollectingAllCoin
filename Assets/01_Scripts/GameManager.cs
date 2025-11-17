@@ -13,9 +13,8 @@ public class GameManager : MonoBehaviour
     [Header("Coin Spawn")]
     [SerializeField] Transform ground;
     [SerializeField] LayerMask groundLayer;
-    List<GameObject> spawnedCoin = new();
+    public List<GameObject> spawnedCoin = new();
     private const string coinName = "Coin";
-    public List<GameObject> SpawndCoinList => spawnedCoin;
     MinimapControl miniMap;
 
     float gX, gY;

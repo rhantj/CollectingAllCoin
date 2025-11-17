@@ -27,7 +27,7 @@ public class Coin : MonoBehaviour, ICollectable
     void OnDisable()
     {
         OnPointerExit();
-        ObjectPoolManager.Instance.ReturnToPool(coinIconName, coinIcon);
+        //ObjectPoolManager.Instance.ReturnToPool(coinIconName, coinIcon);
     }
 
     private void OnTriggerStay(Collider other)
