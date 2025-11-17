@@ -32,8 +32,6 @@ public class MinimapControl : MonoBehaviour
 
     public void SetCoinIcon(List<GameObject> spawnedCoins)
     {
-        spawnedCoins = GameManager.Instance.SpawndCoinList;
-
         foreach (var coin in spawnedCoins)
         {
             var newPos = TransformPoint(coin.transform.position);
