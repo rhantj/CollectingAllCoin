@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     List<GameObject> spawnedCoin = new();
     private const string coinName = "Coin";
     public List<GameObject> SpawndCoinList => spawnedCoin;
+    MinimapControl miniMap;
 
     float gX, gY;
     int maxCoinCnt = 20;
@@ -76,6 +77,7 @@ public class GameManager : MonoBehaviour
         gY = 10f * ground.localScale.z;
 
         PlayerPrefs.DeleteKey(bestTimeText);
+        miniMap = GetComponent<MinimapControl>();
 
         StartCoroutine(Co_GameFlow());
     }
@@ -120,6 +122,8 @@ public class GameManager : MonoBehaviour
             ObjectPoolManager.Instance.SpawnFromPool(coinName, pos, out var coin);
             spawnedCoin.Add(coin);
         }
+
+        miniMap.SetCoinIcon(spawnedCoin);
     }
 
     IEnumerator Co_CalculateTime()
@@ -156,6 +160,7 @@ public class GameManager : MonoBehaviour
         {
             ObjectPoolManager.Instance.ReturnToPool(obj.name, obj);
         }
+        spawnedCoin.Clear();
 
         Score = 0;
         TotaleCoinCnt = 0;
